@@ -20,13 +20,11 @@ import requests
 #     print(f'Error: {awesome_site.status_code}')
 #     print(f'Response: {awesome_site.text}')
 
-
-
-
 # url_photo = ('https://m.media-amazon.com/images/I/715vwvP5ZEL.png')
 
 # some_photo = requests.get(url_photo)
 # print(some_photo.headers)
 
-# with open("json_python/some_photo.png", 'wb') as file:
+# with openython/some_("json_photo.png", 'wb') as file:
 #     file.read(some_photo.content)
+    

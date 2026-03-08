@@ -34,3 +34,26 @@ CREATE TABLE IF NOT EXISTS estoque (
     FOREIGN KEY (produto_id) REFERENCES produtos(id),
     FOREIGN KEY (setor_id)   REFERENCES setores(id)
 );
+
+CREATE TABLE IF NOT EXISTS pedidos (
+    id            INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id    INT         NOT NULL,
+    fornecedor_id INT         NOT NULL,
+    quantidade    INT         NOT NULL,
+    status        VARCHAR(20) DEFAULT 'pendente',
+    data_pedido   DATE        DEFAULT (CURRENT_DATE),
+    data_entrega  DATE,
+    FOREIGN KEY (produto_id)    REFERENCES produtos(id),
+    FOREIGN KEY (fornecedor_id) REFERENCES fornecedores(id)
+);
+
+CREATE TABLE IF NOT EXISTS producao (
+    id        INT AUTO_INCREMENT PRIMARY KEY,
+    setor_id  INT        NOT NULL,
+    data      DATE       NOT NULL,
+    meta      INT        NOT NULL,
+    realizado INT        NOT NULL,
+    turno     VARCHAR(10) NOT NULL,
+    FOREIGN KEY (setor_id) REFERENCES setores(id)
+);
+

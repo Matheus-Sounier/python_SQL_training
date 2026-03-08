@@ -26,5 +26,25 @@ import requests
 # print(some_photo.headers)
 
 # with openython/some_("json_photo.png", 'wb') as file:
-#     file.read(some_photo.content)
-    
+#     file.write(some_photo.content)
+
+
+
+# def fetch_data(endpoint, filter={}):
+url_series = 'https://rickandmortyapi.com/api/character'
+resposta = requests.get(url_series).json()
+    # return respostak.json() if resposta.status_code == 200 else None
+
+# personagem = fetch_data('character', {'name': 'Rick'})
+
+# if personagem:
+#     print(personagem)
+# else:
+#     print('Falha no fetch!')
+
+for informacoes in resposta['results']:
+    nome = informacoes['name']
+    id = informacoes['id']
+    url = informacoes['url']
+    image_series = informacoes['image']
+    print (f'Nomes: {nome} \t id: {id}  \t {url}  \t {image_series}')

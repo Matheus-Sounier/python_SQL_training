@@ -180,3 +180,19 @@ INSERT INTO producao (setor_id, data, meta, realizado, turno) VALUES
     (1, '2024-12-03', 1000,  960, 'manha'),
     (2, '2024-12-03',  500,  520, 'manha'),
     (3, '2024-12-03',  300,  290, 'manha');
+
+-- Lista todos os produtos com código, descrição e preço
+select codigo, descricao, preco_unitario from produtos;
+
+-- Lista só os produtos da categoria 'Passivo'
+select * from produtos where categoria = 'passivo';
+
+-- Lista os produtos com preço acima de 1.00, do mais caro ao mais barato
+select * from produtos where preco_unitario > 1.00 order by preco_unitario DESC;
+
+-- Lista os itens do estoque com quantidade ABAIXO do mínimo
+select * from estoque where quantidade < minimo;
+
+-- Lista os pedidos com status 'pendente', ordenados pela data mais antiga
+select * from pedidos where status = 'pendente' order BY  data_pedido ASC;
+

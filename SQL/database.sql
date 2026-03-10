@@ -268,4 +268,4 @@ WHERE pe.status = 'pendente'
 SELECT s.nome setores, sum(pr.realizado) total_produzido
 FROM producao pr
 INNER JOIN setores s ON pr.setor_id = s.id
-GROUP BY nome
+GROUP BY nomes

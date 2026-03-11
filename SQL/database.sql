@@ -182,17 +182,90 @@ INSERT INTO producao (setor_id, data, meta, realizado, turno) VALUES
     (3, '2024-12-03',  300,  290, 'manha');
 
 -- Lista todos os produtos com código, descrição e preço
-select codigo, descricao, preco_unitario from produtos;
+SELECT codigo, descricao, preco_unitario 
+FROM produtos;
 
 -- Lista só os produtos da categoria 'Passivo'
-select * from produtos where categoria = 'passivo';
+SELECT * 
+FROM produtos 
+WHERE categoria = 'passivo';
 
 -- Lista os produtos com preço acima de 1.00, do mais caro ao mais barato
-select * from produtos where preco_unitario > 1.00 order by preco_unitario DESC;
+SELECT * 
+FROM produtos 
+WHERE preco_unitario > 1.00 
+ORDER BY preco_unitario DESC;
 
 -- Lista os itens do estoque com quantidade ABAIXO do mínimo
-select * from estoque where quantidade < minimo;
+SELECT * 
+FROM estoque 
+WHERE quantidade < minimo;
 
 -- Lista os pedidos com status 'pendente', ordenados pela data mais antiga
-select * from pedidos where status = 'pendente' order BY  data_pedido ASC;
+SELECT * 
+FROM pedidos 
+WHERE status = 'pendente' 
+ORDER BY data_pedido ASC;
 
+-- Calculo de qual é a quantidade e minimos total de produtos baseado no dia que eles foram atualizados
+SELECT atualizado, sum(quantidade), sum(minimo) 
+FROM estoque 
+GROUP BY atualizado; 
+
+-- Quantidade de produtos que existem por categoria
+SELECT categoria, count(categoria) 
+FROM produtos 
+GROUP BY categoria
+
+-- O total de peças em estoque por setor
+SELECT setor_id, sum(quantidade) AS total_pecas 
+FROM estoque 
+GROUP BY setor_id
+
+-- Quantidade de pedidos que existem por status
+SELECT status, count(status) 
+FROM pedidos 
+GROUP BY status
+
+-- A média de produção realizada por setor
+SELECT setor_id, avg(realizado) 
+FROM producao 
+GROUP BY setor_id
+
+-- A quantidade total de peças pedidas por fornecedor
+SELECT fornecedor_id, sum(quantidade)
+FROM pedidos 
+GROUP BY fornecedor_id
+
+
+-- Lista os produtos com o nome do fornecedor
+SELECT p.fornecedor_id, f.nome fornecedor_nome, p.descricao
+FROM fornecedores f
+INNER JOIN produtos p
+ON f.id = p.fornecedor_id
+
+-- Lista o estoque com nome do produto e nome do setor
+SELECT s.nome setores, pr.descricao nome_produto, e.quantidade
+FROM estoque e
+INNER JOIN produtos pr ON e.setor_id = pr.id
+INNER JOIN setores s ON e.produto_id = s.id;
+
+-- Lista os itens EM FALTA com nome do produto e nome do setor
+SELECT s.nome setores, pr.descricao nome_produto, e.quantidade, e.minimo
+FROM estoque e
+INNER JOIN produtos pr ON e.produto_id = pr.id
+INNER JOIN setores s ON e.setor_id = s.id
+WHERE quantidade < minimo
+
+-- Lista os pedidos PENDENTES com nome do produto e nome do fornecedor
+SELECT f.nome fornecedor_nome, pr.descricao nome_produto, pe.status
+FROM pedidos pe
+INNER JOIN fornecedores f ON pe.fornecedor_id = f.id
+INNER JOIN produtos pr ON pe.produto_id = pr.id
+WHERE pe.status = 'pendente'
+
+-- O total produzido por setor com o NOME do setor
+SELECT s.nome setores, sum(pr.realizado) total_produzido
+FROM producao pr
+INNER JOIN setores s ON pr.setor_id = s.id
+GROUP BY nomes

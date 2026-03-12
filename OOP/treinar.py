@@ -34,3 +34,44 @@
 # biblitequinha.add_livros(l2)
 # biblitequinha.add_livros(l3)
 # print(biblitequinha.get_media_paginas())
+
+# class ContaBancaria:
+#     def __init__(self, titular, saldo, inicial):
+#         self.titular = titular
+#         self.saldo = saldo
+#         self.inicial = inicial
+
+#     def get_saldo(self):
+#         return self.saldo
+    
+# class Conta:
+#     def __init__(self, nome, capacidade):
+#         self.nome = nome
+#         self.capacidade = capacidade
+#         self.contas = []
+
+#     def abrir_conta(self, conta):
+#         if len(self.contas) < self.capacidade:
+#             self.contas.append(conta)
+#             return True
+#         return False
+    
+#     def get_saldo_total(self):
+#         value = 0
+#         for i in self.contas:
+#             value += i.get_saldo()
+#         return value
+
+#     def buscar_conta(self, titular):
+#         pass
+        
+
+# c1 = ContaBancaria('fudido', 123456, 126768)
+# c2 = ContaBancaria('legal', 123123, 112321)
+
+# continha = Conta('matheus', 2)
+# continha.abrir_conta(c1)
+# continha.abrir_conta(c2)
+# print(continha.get_saldo_total())
+
+

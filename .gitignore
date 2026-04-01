@@ -1,2 +1,2 @@
 venv
-*.cpython
+__pycache__/

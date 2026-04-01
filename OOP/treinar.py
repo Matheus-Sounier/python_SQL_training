@@ -75,3 +75,32 @@
 # print(continha.get_saldo_total())
 
 
+class Pet:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def show(self):
+        print(f"I'm a {self.name} and I'm {self.age} years old")
+
+class Cat(Pet):
+
+    def __init__(self, name, age, color):
+        super().__init__(name, age)
+        self.color= color
+
+    def speak(self):
+        print('meow')
+
+    def show(self):
+        print(f"I'm a {self.name}, i'm {self.age} years old and my color is {self.color}")
+
+class Dog(Pet):
+    def speak(self):
+        print('bark')
+
+
+p = Pet('matheus', 10)
+p.show()
+
+c = Cat('matheus', 10, 'black')
+c.show()

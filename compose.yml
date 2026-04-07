@@ -1,0 +1,19 @@
+services:
+  agente:
+    build: .
+    user: "1000:1000"
+    container_name: ${CLAUDE_CONTAINER_NAME}
+    
+    stdin_open: true
+    tty: true
+
+    # Mapeia sua pasta de trabalho
+    volumes:
+      - /lab/docker/ubuntu-app:/app
+    
+    # Mapeia o host
+    extra_hosts:
+      - "${EXTRA_HOSTS}"
+
+    env_file:
+      - .env

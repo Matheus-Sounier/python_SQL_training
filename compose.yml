@@ -7,9 +7,14 @@ services:
     stdin_open: true
     tty: true
 
-    # Mapeia sua pasta de trabalho
     volumes:
-      - /lab/docker/ubuntu-app:/app
+      - /lab/docker/ubuntu-app:/data   # seus arquivos
+      - openclaude_config:/home/ubuntu/.openclaude
+
+    # Mapeia sua pasta de trabalho
+    # volumes:
+    #   - /lab/docker/ubuntu-app:/app
+    #   - openclaude_config:/home/ubuntu/.openclaude
     
     # Mapeia o host
     extra_hosts:
@@ -17,3 +22,6 @@ services:
 
     env_file:
       - .env
+      
+volumes:
+  openclaude_config:

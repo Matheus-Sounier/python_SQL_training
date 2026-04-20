@@ -18,9 +18,9 @@ CREATE TABLE produtos (
     preco_unitario NUMBER(10,2)  NOT NULL,
     fornecedor_id  NUMBER,
     CONSTRAINT fk_prod_forn 
-    	FOREIGN KEY (fornecedor_id)
-    	REFERENCES fornecedores(id)
-    	ON DELETE CASCADE
+        FOREIGN KEY (fornecedor_id)
+        REFERENCES fornecedores(id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE estoque (
@@ -31,11 +31,11 @@ CREATE TABLE estoque (
     minimo     NUMBER NOT NULL DEFAULT 50,
     atualizado DATE   DEFAULT SYSDATE NOT null,
     CONSTRAINT fk_est_prod 
-    	FOREIGN KEY (produto_id) 
-    	REFERENCES produtos(id),
+        FOREIGN KEY (produto_id) 
+        REFERENCES produtos(id),
     CONSTRAINT fk_est_set  
-    	FOREIGN KEY (setor_id) 
-    	REFERENCES setores(id)
+        FOREIGN KEY (setor_id) 
+        REFERENCES setores(id)
 );
  
 CREATE TABLE pedidos (
@@ -50,8 +50,8 @@ CREATE TABLE pedidos (
 	    FOREIGN KEY (produto_id)    
 	    REFERENCES produtos(id),
     CONSTRAINT fk_ped_forn 
-    	FOREIGN KEY (fornecedor_id) 
-    	REFERENCES fornecedores(id)
+        FOREIGN KEY (fornecedor_id) 
+        REFERENCES fornecedores(id)
 );
  
 CREATE TABLE producao (
@@ -62,8 +62,8 @@ CREATE TABLE producao (
     realizado NUMBER        NOT NULL,
     turno     VARCHAR2(10)  NOT NULL,
     CONSTRAINT fk_producao_set 
-    	FOREIGN KEY (setor_id) 
-    	REFERENCES setores(id)
+        FOREIGN KEY (setor_id) 
+        REFERENCES setores(id)
 );
  
 CREATE TABLE alunos (
@@ -77,3 +77,29 @@ CREATE TABLE professores (
     nome       VARCHAR2(100) DEFAULT 'desconhecido' NOT null,
     quantidade NUMBER        NULL
 );
+
+CREATE OR REPLACE PROCEDURE resultado(
+	p_produto_id IN NUMBER,
+	p_resutado OUT VARCHAR2
+) AS 
+	lo_var_estoque_atual NUMBER;
+BEGIN
+	
+	SELECT quantidade INTO lo_var_estoque_atual
+	FROM estoque
+	WHERE produto_id = p_produto_id;
+
+	IF lo_var_estoque_atual > 100 THEN
+		p_resutado := 'Estoque ok';
+	ELSE
+		p_resutado := 'Estoque baixo';
+	END IF;
+
+EXCEPTION
+	
+	WHEN NO_DATA_FOUND THEN
+		p_resutado := 'Produto não cadastrado';
+    WHEN TOO_MANY_ROWS THEN
+        p_resutado := '"Erro: ID duplicado na tabela"';
+END;
+

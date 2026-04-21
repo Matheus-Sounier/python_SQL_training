@@ -102,4 +102,3 @@ EXCEPTION
     WHEN TOO_MANY_ROWS THEN
         p_resutado := '"Erro: ID duplicado na tabela"';
 END;
-

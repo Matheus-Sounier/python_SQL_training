@@ -1,9 +1,10 @@
 import oracledb
+from decouple import config
 
 with oracledb.connect(
-    user = 'matheus',
-    password = 'sounier22040920072006',
-    dsn = '192.168.100.14:1521/FREEPDB1'
+    user = config('PYTHON_USER'),
+    password = config('PYTHON_PWD'),
+    dsn = config('PYTHON_DSN')
 ) as conn:
     with conn.cursor() as cursor:
         cursor.execute('SELECT id, nome FROM setores')

@@ -7,17 +7,25 @@ with oracledb.connect(
     dsn = config('PYTHON_DSN')
 ) as conn:
     with conn.cursor() as cursor:
-        cursor.execute('SELECT id, nome FROM setores')
-        linhas = cursor.fetchall()
-        for row in linhas:
-            print(row)
+        # cursor.execute('SELECT id, nome FROM setores')
+        # linhas = cursor.fetchall()
+        # for row in linhas:
+        #     print(row)
+        
+        cursor.execute('create or replace view vw_produto_fornecedor as select p.codigo, p.descricao, p.categoria, f.nome, f.pais from produtos p join fornecedores f on f.id = p.fornecedor_id')
+        cursor.execute('select * from vw_produto_fornecedor')
+        faz = cursor.fetchmany(5)
+        for codigo, descricao, categoria, nome, pais in faz:
+            print(f'Nome_empresa: {nome} | Empresa_pais: {pais} | Código: {codigo} | Produto: {descricao} | Categoria: {categoria}')
         
         # cursor.execute('select nome, pais from fornecedores')
         # linhas_fodas = cursor.fetchall()
         # for row in linhas_fodas:
         #     print(row)
 
-        cursor.execute('select s.nome, e.quantidade, e.minimo from estoque e join setores s on s.id = e.setor_id')
-        isso_ai = cursor.fetchall()
-        for i in isso_ai:
-            print(i)
+        # cursor.execute('select s.nome, e.quantidade, e.minimo from estoque e join setores s on s.id = e.setor_id')
+        # isso_ai = cursor.fetchall()
+        # for nome, quantidade, minimo in isso_ai:
+        #     print(f"Setor: {nome} | Qtd: {quantidade} | Mínimo: {minimo}")
+
+        # cursor.execute('create or replace view vw_')

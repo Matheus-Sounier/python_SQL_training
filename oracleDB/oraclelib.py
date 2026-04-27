@@ -12,11 +12,19 @@ with oracledb.connect(
         # for row in linhas:
         #     print(row)
         
-        cursor.execute('create or replace view vw_produto_fornecedor as select p.codigo, p.descricao, p.categoria, f.nome, f.pais from produtos p join fornecedores f on f.id = p.fornecedor_id')
-        cursor.execute('select * from vw_produto_fornecedor')
-        faz = cursor.fetchmany(5)
-        for codigo, descricao, categoria, nome, pais in faz:
-            print(f'Nome_empresa: {nome} | Empresa_pais: {pais} | Código: {codigo} | Produto: {descricao} | Categoria: {categoria}')
+        # cursor.execute('drop view vw_produto_fornecedor')
+        cursor.execute('create or replace view vw_produto_fornecedor as select f.nome, p.descricao, p.preco_unitario from produtos p join fornecedores f on f.id = p.fornecedor_id')
+        cursor.execute('select * from vw_produto_fornecedor where preco_unitario > (select avg(preco_unitario) from produtos)')
+        produto_fornecedor = cursor.fetchall()
+        for i in produto_fornecedor:
+            print(produto_fornecedor)
+        # for nome, descricao, preco_unitario in produto_fornecedor:
+        #     print(f'Empresa: {nome} | Produto: {descricao} | Preço Únitario: {preco_unitario}')
+
+        # cursor.execute('select * from vw_produto_fornecedor')
+        # faz = cursor.fetchmany(5)
+        # for codigo, descricao, categoria, nome, pais in faz:
+        #     print(f'Nome_empresa: {nome} | Empresa_pais: {pais} | Código: {codigo} | Produto: {descricao} | Categoria: {categoria}')
         
         # cursor.execute('select nome, pais from fornecedores')
         # linhas_fodas = cursor.fetchall()

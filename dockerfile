@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     ca-certificates \
     git \
+    code \
     ripgrep \
     python3 \
     python3-pip \
